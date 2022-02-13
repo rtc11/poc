@@ -1,5 +1,5 @@
-```plantuml
 @startuml
+!theme lightgray
 queue "vedtak.avro" <<topic>> as vedtak_avro
 queue "soknad-left-join-vedtak-repartition" <<topic>> as soknad_left_join_vedtak_repartition
 queue "select-key_medlem.personident-repartition" <<topic>> as select_key_medlem_personident_repartition
@@ -66,4 +66,3 @@ package "Sub-topology: 2" {
 	select_key_medlem_personident_repartition_filter --> select_key_medlem_personident_repartition_sink
 }
 @enduml
-```

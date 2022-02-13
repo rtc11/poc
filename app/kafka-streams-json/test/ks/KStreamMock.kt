@@ -29,7 +29,8 @@ class KStreamMock(topology: Topology) : AutoCloseable {
         put(StreamsConfig.APPLICATION_ID_CONFIG, "topology.test.driver.${UUID.randomUUID()}")
         put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String()::class.java)
         put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, JsonSerde::class.java)
-        put(StreamsConfig.STATE_DIR_CONFIG, "build/kafka-streams/state")
+        put(StreamsConfig.STATE_DIR_CONFIG, "build/kafka-streams/json-state")
+        put(StreamsConfig.MAX_TASK_IDLE_MS_CONFIG, StreamsConfig.MAX_TASK_IDLE_MS_DISABLED)
         put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
         put(ProducerConfig.ACKS_CONFIG, "all")
     }

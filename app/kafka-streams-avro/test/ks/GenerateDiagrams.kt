@@ -1,22 +1,13 @@
 package ks
 
-import kstream.topology.TopologyUML
+import kstream.topology.KStreamsUML
 import org.junit.jupiter.api.Test
-import java.io.File
 
 class GenerateDiagrams {
-
     @Test
     fun `create UML diagram of Topology`() {
-        val topology = createTopology()
-        val destination = TopologyUML.createFile(topology)
-        println("UML file generated: $destination")
-    }
-
-    @Test
-    fun `create topology description`() {
-        File("topology.txt").apply {
-            writeText(createTopology().describe().toString())
+        KStreamsUML.file(createTopology()).also {
+            println("Generated UML to ${it.absoluteFile}. Use in https://plantuml-editor.kkeisuke.dev")
         }
     }
 }
