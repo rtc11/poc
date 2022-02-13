@@ -17,11 +17,30 @@ jobs:
       - uses: gradle/gradle-build-action@v2
         with:
           arguments: test --continue --no-daemon
+      - uses: Timmy/plantuml-action@v1
+        with:
+          args: '-tpng app/kafka-streams-json/topology.puml'
+      - uses: actions/upload-artifact@v2
+        with:
+          name: topology
+          path: app/kafka-streams-json/topology.png
 
-  topology:
-    needs: [ test ]
-    uses:  rtc11/poc/.github/workflows/topology.yml@main
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
-    with:
-      actor: ${{ github.actor }}
+      - name: Commit topology.png
+        run: |
+          git config --local user.name  ${{ inputs.actor }}
+          git add app/kafka-streams-json/topology.png
+          git commit -m "Updating topology.png"
+
+      - name: Push topology.png
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.token }}
+          force: true
+
+#  topology:
+#    needs: [ test ]
+#    uses:  rtc11/poc/.github/workflows/topology.yml@main
+#    secrets:
+#      token: ${{ secrets.GITHUB_TOKEN }}
+#    with:
+#      actor: ${{ github.actor }}
