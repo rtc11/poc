@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     name: plantuml
     steps:
-      - name: actions/checkout@v2
-      - name: Timmy/plantuml-action@v1
+      - uses: actions/checkout@v2
+      - uses: Timmy/plantuml-action@v1
         with:
           args: '-tpng app/kafka-streams-json/topology.puml'
       - uses: actions/upload-artifact@v2
