@@ -33,7 +33,7 @@ jobs:
           files: app/kafka-streams-json/topology.png
 
       - name: Commit topology.png
-        if: steps.changed-files.outputs.files_changed == 'true'
+        if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           git config --local user.name  ${{ github.actor }}
           git add app/kafka-streams-json/topology.png
