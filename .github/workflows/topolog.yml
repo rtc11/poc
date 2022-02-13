@@ -1,6 +1,9 @@
 name: Generate PlantUML for Kafka Streams Topology
 
-on: [ push ]
+on:
+  push:
+    paths:
+      - app/kafka-streams-json/topology.puml
 
 jobs:
   plantuml:
