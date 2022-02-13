@@ -3,8 +3,8 @@ name: Generate UML for topology in kafka-streams-json
 on:
   push:
     paths:
-    - app/kafka-streams-json/**
-    - .github/workflows/topology.yml
+      - app/kafka-streams-json/**
+      - .github/workflows/topology.yml
 
 jobs:
   generate:
@@ -14,30 +14,37 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 2
+
       - uses: actions/setup-java@v2
         with:
           java-version: 17
           distribution: 'temurin'
           check-latest: true
+
       - uses: gradle/wrapper-validation-action@v1
       - uses: gradle/gradle-build-action@v2
         with:
-          arguments: app:kafka-streams-json:test --no-daemon
-      - uses: Timmy/plantuml-action@v1
-        with:
-          args: '-tpng app/kafka-streams-json/build/topology.puml'
+          files: app/kafka-streams-json/doc/topology.puml
+
       - uses: tj-actions/changed-files@v11.7
         id: changed-files
         with:
-          files: app/kafka-streams-json/topology.png
+          arguments: app:kafka-streams-json:test --no-daemon
+
+      - uses: Timmy/plantuml-action@v1
+        if: steps.changed-files.outputs.any_changed == 'true'
+        with:
+          args: '-tpng app/kafka-streams-json/doc/topology.puml'
+
       - name: Commit topology.png
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           git config --local user.name  ${{ github.actor }}
-          git add app/kafka-streams-json/topology.png
+          git add app/kafka-streams-json/doc/topology.png
           git commit -m "Updating topology.png"
+
       - name: Push topology.png
-        if: success()
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
