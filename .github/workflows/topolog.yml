@@ -7,13 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     name: plantuml
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-      - name: Process diagrams
-        uses: Timmy/plantuml-action@v1
+      - name: actions/checkout@v2
+      - name: Timmy/plantuml-action@v1
         with:
           args: '-tpng app/kafka-streams-json/topology.puml'
       - uses: actions/upload-artifact@v2
         with:
           name: topology
           path: app/kafka-streams-json/topology.png
+
+      - name: Commit topology.png
+        run: |
+          git config --local user.name  ${{ github.actor }}
+          git add app/kafka-streams-json/topology.png
+          git commit -m "Updating topology.png"
+
+      - name: Push topology.png
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
