@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ks.GenerateDiagrams" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-02-08T09:50:33" hostname="Robins-MacBook-Pro.local" time="0.293">
-  <properties/>
-  <testcase name="create UML diagram of Topology()" classname="ks.GenerateDiagrams" time="0.285"/>
-  <testcase name="create topology description()" classname="ks.GenerateDiagrams" time="0.007"/>
-  <system-out><![CDATA[UML file generated: topology.puml
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
