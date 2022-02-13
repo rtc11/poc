@@ -4,7 +4,7 @@ on:
   push:
     paths:
     - app/kafka-streams-json/**
-    - .github/workflows/test.yml
+    - .github/workflows/topology.yml
 
 jobs:
   generate:
