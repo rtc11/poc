@@ -1,4 +1,4 @@
-name: Test kafka-streams-json
+name: Generate UML for topology in kafka-streams-json
 
 on:
   push:
@@ -25,20 +25,17 @@ jobs:
           arguments: app:kafka-streams-json:test --no-daemon
       - uses: Timmy/plantuml-action@v1
         with:
-          args: '-tpng app/kafka-streams-json/topology.puml'
-
+          args: '-tpng app/kafka-streams-json/build/topology.puml'
       - uses: tj-actions/changed-files@v11.7
         id: changed-files
         with:
           files: app/kafka-streams-json/topology.png
-
       - name: Commit topology.png
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           git config --local user.name  ${{ github.actor }}
           git add app/kafka-streams-json/topology.png
           git commit -m "Updating topology.png"
-
       - name: Push topology.png
         if: success()
         uses: ad-m/github-push-action@master
