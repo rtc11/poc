@@ -1,6 +1,8 @@
-name: Test
+name: Test kafka-streams-json
 
-on: push
+on:
+  push:
+    paths: [ app/kafka-streams-json/** ]
 
 jobs:
   test:
@@ -16,7 +18,7 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
       - uses: gradle/gradle-build-action@v2
         with:
-          arguments: test --continue --no-daemon
+          arguments: app:kafka-streams-json:test --no-daemon
       - uses: Timmy/plantuml-action@v1
         with:
           args: '-tpng app/kafka-streams-json/topology.puml'

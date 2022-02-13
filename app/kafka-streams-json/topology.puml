@@ -15,8 +15,8 @@ package "Sub-topology: 0" {
 	agent "add-medlem" <<Processor>> as add_medlem
 	agent "create-vedtak" <<Processor>> as create_vedtak
 	agent "KSTREAM-SOURCE-0000000000" <<Source>> as KSTREAM_SOURCE_0000000000
-	agent "log-produced-log-produce-created-json-vedtak" <<Processor>> as log_produced_log_produce_created_json_vedtak
-	agent "log-produced-log-produce-json-vedtak-with-medlem" <<Processor>> as log_produced_log_produce_json_vedtak_with_medlem
+	agent "log-produce-created-json-vedtak" <<Processor>> as log_produce_created_json_vedtak
+	agent "produce-json-vedtak-with-medlem-logged" <<Processor>> as produce_json_vedtak_with_medlem_logged
 	agent "KTABLE-SOURCE-0000000001" <<Processor>> as KTABLE_SOURCE_0000000001
 	agent "produce-created-json-vedtak" <<Sink>> as produce_created_json_vedtak
 	agent "produce-json-vedtak-with-medlem" <<Sink>> as produce_json_vedtak_with_medlem
@@ -33,11 +33,11 @@ package "Sub-topology: 0" {
 	soknad_leftjoin_vedtak --> ignore_existing_vedtak
 	ignore_existing_vedtak --> create_vedtak
 	medlem_join_vedtak --> add_medlem
-	add_medlem --> log_produced_log_produce_json_vedtak_with_medlem
-	create_vedtak --> log_produced_log_produce_created_json_vedtak
+	add_medlem --> produce_json_vedtak_with_medlem_logged
+	create_vedtak --> log_produce_created_json_vedtak
 	KSTREAM_SOURCE_0000000000 --> KTABLE_SOURCE_0000000001
-	log_produced_log_produce_created_json_vedtak --> produce_created_json_vedtak
-	log_produced_log_produce_json_vedtak_with_medlem --> produce_json_vedtak_with_medlem
+	log_produce_created_json_vedtak --> produce_created_json_vedtak
+	produce_json_vedtak_with_medlem_logged --> produce_json_vedtak_with_medlem
 }
 package "Sub-topology: 1" {
 	agent "consume-json-soknad" <<Source>> as consume_json_soknad
@@ -54,14 +54,14 @@ package "Sub-topology: 1" {
 }
 package "Sub-topology: 2" {
 	agent "consume-json-medlem" <<Source>> as consume_json_medlem
-	agent "log-consumed-json-medlem" <<Processor>> as log_consumed_json_medlem
+	agent "consumed-json-medlem-logged" <<Processor>> as consumed_json_medlem_logged
 	agent "select-key_medlem.personident" <<Processor>> as select_key_medlem_personident
 	agent "medlem-join-vedtak-repartition-filter" <<Processor>> as medlem_join_vedtak_repartition_filter
 	agent "medlem-join-vedtak-repartition-sink" <<Sink>> as medlem_join_vedtak_repartition_sink
 	medlem_json --> consume_json_medlem
 	medlem_join_vedtak_repartition <-- medlem_join_vedtak_repartition_sink
-	consume_json_medlem --> log_consumed_json_medlem
-	log_consumed_json_medlem --> select_key_medlem_personident
+	consume_json_medlem --> consumed_json_medlem_logged
+	consumed_json_medlem_logged --> select_key_medlem_personident
 	select_key_medlem_personident --> medlem_join_vedtak_repartition_filter
 	medlem_join_vedtak_repartition_filter --> medlem_join_vedtak_repartition_sink
 }

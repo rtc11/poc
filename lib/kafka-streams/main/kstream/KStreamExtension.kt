@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory
 private val log: Logger = LoggerFactory.getLogger("app")
 
 fun <K, V> KStream<K, V>.logProduced(topic: String, name: String): KStream<K, V> =
-    peek({ key, value -> log.info("Produced [$topic] K:$key V:$value") }, Named.`as`("log-produced-$name"))
+    peek({ key, value -> log.info("Produced [$topic] K:$key V:$value") }, Named.`as`(name))
 
 fun <K, V : Any> KStream<K, V>.logConsumed(name: String): KStream<K, V> = transformValues(
     ValueTransformerWithKeySupplier {
