@@ -1,0 +1,15 @@
+{
+  "type" : "record",
+  "name" : "Request",
+  "namespace" : "no.nav.aap.avro",
+  "fields" : [ {
+    "name" : "mottattDato",
+    "type" : "string"
+  }, {
+    "name" : "ytelse",
+    "type" : "string"
+  }, {
+    "name" : "arbeidetUtenlands",
+    "type" : "boolean"
+  } ]
+}

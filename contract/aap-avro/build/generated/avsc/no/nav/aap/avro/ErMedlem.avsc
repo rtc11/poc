@@ -1,0 +1,6 @@
+{
+  "type" : "enum",
+  "name" : "ErMedlem",
+  "namespace" : "no.nav.aap.avro",
+  "symbols" : [ "JA", "NEI", "UAVKLART" ]
+}

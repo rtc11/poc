@@ -1,0 +1,69 @@
+{
+  "protocol" : "VedtakV1",
+  "namespace" : "no.nav.aap.avro",
+  "types" : [ {
+    "type" : "enum",
+    "name" : "ErMedlem",
+    "symbols" : [ "JA", "NEI", "UAVKLART" ]
+  }, {
+    "type" : "record",
+    "name" : "Request",
+    "fields" : [ {
+      "name" : "mottattDato",
+      "type" : "string"
+    }, {
+      "name" : "ytelse",
+      "type" : "string"
+    }, {
+      "name" : "arbeidetUtenlands",
+      "type" : "boolean"
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "Response",
+    "fields" : [ {
+      "name" : "erMedlem",
+      "type" : "ErMedlem"
+    }, {
+      "name" : "begrunnelse",
+      "type" : [ "null", "string" ],
+      "default" : null
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "Medlem",
+    "fields" : [ {
+      "name" : "personident",
+      "type" : "string"
+    }, {
+      "name" : "id",
+      "type" : "string"
+    }, {
+      "name" : "request",
+      "type" : [ "null", "Request" ],
+      "default" : null
+    }, {
+      "name" : "response",
+      "type" : [ "null", "Response" ],
+      "default" : null
+    } ]
+  }, {
+    "type" : "enum",
+    "name" : "Status",
+    "symbols" : [ "VEDTATT", "AVSLÅTT", "AVVENTER" ]
+  }, {
+    "type" : "record",
+    "name" : "Vedtak",
+    "fields" : [ {
+      "name" : "personident",
+      "type" : "string"
+    }, {
+      "name" : "erMedlem",
+      "type" : [ "null", "ErMedlem" ]
+    }, {
+      "name" : "status",
+      "type" : "Status"
+    } ]
+  } ],
+  "messages" : { }
+}

@@ -1,0 +1,12 @@
+{
+  "type" : "record",
+  "name" : "Søknad",
+  "namespace" : "no.nav.aap.avro",
+  "fields" : [ {
+    "name" : "personident",
+    "type" : "string"
+  }, {
+    "name" : "arbeidetUtenlands",
+    "type" : "boolean"
+  } ]
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ks.AppTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-02-08T09:42:49" hostname="Robins-MacBook-Pro.local" time="1.543">
+  <properties/>
+  <testcase name="happy path()" classname="ks.AppTest" time="1.543"/>
+  <system-out><![CDATA[?[36m10:42:50.574?[0;39m ?[1;30m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[35mapp?[0;39m - Consumed [soknad.json] K:123 V:Søknad(personident=123, arbeidetUtenlands=false)
+?[36m10:42:50.611?[0;39m ?[1;30m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[35mapp?[0;39m - Produced [vedtak.json] K:123 V:Vedtak(personident=123, erMedlem=null, status=AVVENTER)
+?[36m10:42:50.901?[0;39m ?[1;30m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[35mapp?[0;39m - Consumed [medlem.json] K:123 V:Medlem(personident=123, id=9c1280c3-5713-45b8-91d0-a7d5eb68fd45, request=null, response=Response(erMedlem=JA, årsak=null))
+?[36m10:42:50.923?[0;39m ?[1;30m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[35mapp?[0;39m - Produced [vedtak.json] K:123 V:Vedtak(personident=123, erMedlem=JA, status=VEDTATT)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

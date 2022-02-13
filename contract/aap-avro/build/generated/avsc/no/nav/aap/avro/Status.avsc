@@ -1,0 +1,6 @@
+{
+  "type" : "enum",
+  "name" : "Status",
+  "namespace" : "no.nav.aap.avro",
+  "symbols" : [ "VEDTATT", "AVSLÅTT", "AVVENTER" ]
+}

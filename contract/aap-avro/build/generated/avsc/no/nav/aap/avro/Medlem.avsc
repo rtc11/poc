@@ -1,0 +1,48 @@
+{
+  "type" : "record",
+  "name" : "Medlem",
+  "namespace" : "no.nav.aap.avro",
+  "fields" : [ {
+    "name" : "personident",
+    "type" : "string"
+  }, {
+    "name" : "id",
+    "type" : "string"
+  }, {
+    "name" : "request",
+    "type" : [ "null", {
+      "type" : "record",
+      "name" : "Request",
+      "fields" : [ {
+        "name" : "mottattDato",
+        "type" : "string"
+      }, {
+        "name" : "ytelse",
+        "type" : "string"
+      }, {
+        "name" : "arbeidetUtenlands",
+        "type" : "boolean"
+      } ]
+    } ],
+    "default" : null
+  }, {
+    "name" : "response",
+    "type" : [ "null", {
+      "type" : "record",
+      "name" : "Response",
+      "fields" : [ {
+        "name" : "erMedlem",
+        "type" : {
+          "type" : "enum",
+          "name" : "ErMedlem",
+          "symbols" : [ "JA", "NEI", "UAVKLART" ]
+        }
+      }, {
+        "name" : "begrunnelse",
+        "type" : [ "null", "string" ],
+        "default" : null
+      } ]
+    } ],
+    "default" : null
+  } ]
+}

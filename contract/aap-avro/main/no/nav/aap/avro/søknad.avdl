@@ -1,0 +1,7 @@
+@namespace("no.nav.aap.avro")
+protocol SøknadV1 {
+	record Søknad {
+		string personident;
+		boolean arbeidetUtenlands;
+	}
+}
