@@ -24,12 +24,12 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
       - uses: gradle/gradle-build-action@v2
         with:
-          files: app/kafka-streams-json/doc/topology.puml
+          arguments: app:kafka-streams-json:test --no-daemon
 
       - uses: tj-actions/changed-files@v11.7
         id: changed-files
         with:
-          arguments: app:kafka-streams-json:test --no-daemon
+          files: app/kafka-streams-json/doc/topology.puml
 
       - uses: Timmy/plantuml-action@v1
         if: steps.changed-files.outputs.any_changed == 'true'
