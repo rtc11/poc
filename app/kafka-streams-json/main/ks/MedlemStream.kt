@@ -16,11 +16,11 @@ import org.slf4j.LoggerFactory
 
 fun StreamsBuilder.createMedlemStream(vedtakTable: KTable<String, Vedtak>) {
     stream<String, Medlem>("medlem.json", consumedWithJson("consume-json-medlem"))
-        .logConsumed("log-consumed-json-medlem")
+        .logConsumed("consumed-json-medlem-logged")
         .selectKey({ _, medlem -> medlem.personident }, Named.`as`("select-key_medlem.personident"))
         .join(vedtakTable, ::medlemJoiner, joinedWithJson("medlem-join-vedtak"))
         .mapValues(::oppdaterVedtak, Named.`as`("add-medlem"))
-        .logProduced("vedtak.json", "log-produce-json-vedtak-with-medlem")
+        .logProduced("vedtak.json", "produce-json-vedtak-with-medlem-logged")
         .to("vedtak.json", producedWithJson("produce-json-vedtak-with-medlem"))
 }
 

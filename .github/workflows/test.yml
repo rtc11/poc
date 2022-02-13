@@ -20,10 +20,11 @@ jobs:
       - uses: Timmy/plantuml-action@v1
         with:
           args: '-tpng app/kafka-streams-json/topology.puml'
-      - uses: actions/upload-artifact@v2
-        with:
-          name: topology
-          path: app/kafka-streams-json/topology.png
+
+#      - uses: actions/upload-artifact@v2
+#        with:
+#          name: topology
+#          path: app/kafka-streams-json/topology.png
 
       - name: Commit topology.png
         run: |
