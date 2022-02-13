@@ -1,0 +1,25 @@
+name: Generate PlantUML for Kafka Streams Topology
+
+on:
+  push:
+    paths:
+      - app/kafka-streams-json/topology.puml
+
+jobs:
+  plantuml:
+    runs-on: ubuntu-latest
+    name: plantuml
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: plantuml
+        id: plantuml
+        uses: grassedge/generate-plantuml-action@v1.5
+        with:
+          path: app/kafka-streams-json/topology.puml
+          message: "Render PlantUML files"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

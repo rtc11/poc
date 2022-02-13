@@ -7,20 +7,30 @@ import java.io.File
 internal const val EOL = "\n"
 internal const val TAB = "\t"
 
-object TopologyUML {
-    fun createFile(topology: Topology, destination: String = "topology.puml"): String {
+object KStreamsUML {
+    fun text(topology: Topology): String = plantUML(topology)
+
+    fun file(topology: Topology, destination: String = "topology.puml"): File =
         File(destination).apply {
-            writeText(markdown(topology))
+            writeText(plantUML(topology))
         }
-        return destination
+
+    private fun plantUML(topology: Topology): String = topology.describe().let { description ->
+        val uml = createUml(description)
+        uml.toString()
     }
 
     private fun markdown(topology: Topology): String = topology.describe().let { description ->
+        val uml = createUml(description)
+        Markdown(uml).toString()
+    }
+
+    private fun createUml(description: TopologyDescription): PlantUML {
         val stores = description.globalStores().map { processStore(it) }.toSet()
         val subtopologies = description.subtopologies().map { processSubtopology(it) }
         val queues = description.getTopics().map { formatTopicToUmlQueue(it) }.toSet()
         val uml = PlantUML(stores + subtopologies, queues)
-        Markdown(uml).toString()
+        return uml
     }
 
     private fun TopologyDescription.getTopics(): Set<String> = this.let {
@@ -66,16 +76,16 @@ object TopologyUML {
     }
 
     private fun TopologyDescription.Source.sourceToUml(): Pair<Set<String>, Set<String>> =
-        this.topicSet().map(::formatPlantUmlNames)
+        this.topicSet().map(KStreamsUML::formatPlantUmlNames)
             .map { formattedTopicName -> formatSourceToUmlRelation(formattedTopicName, this.name()) }
             .let { Pair(emptySet(), it.toSet()) }
 
     private fun TopologyDescription.Processor.processorToUml(): Pair<Set<String>, Set<String>> =
         this.stores().map { it to formatPlantUmlNames(it) }.map { (storeName, formattedStoreName) ->
-                formatStoreToUmlDatabase(storeName, formattedStoreName) to formatStoreToUmlRelation(
-                    formattedStoreName, this.name()
-                )
-            }.split()
+            formatStoreToUmlDatabase(storeName, formattedStoreName) to formatStoreToUmlRelation(
+                formattedStoreName, this.name()
+            )
+        }.split()
 
     private fun TopologyDescription.Sink.sinkToUml(): Pair<Set<String>, Set<String>> = this.let {
         val formattedSinkName = formatPlantUmlNames(it.topic())
@@ -138,6 +148,7 @@ object TopologyUML {
         override fun toString(): String {
             return """
                 | @startuml
+                | !theme lightgray
                 | ${queue.joinToString(EOL)}
                 | ${packages.joinToString(EOL) { it.toString() }}
                 | @enduml
