@@ -1,9 +1,17 @@
 name: Generate PlantUML for Kafka Streams Topology
 
 on:
-  push:
-    paths:
-      - app/kafka-streams-json/topology.puml
+#  workflow_run:
+#    workflows: [ Test ]
+#    types: [ completed ]
+  workflow_call:
+    inputs:
+      actor:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
 
 jobs:
   plantuml:
@@ -21,12 +29,12 @@ jobs:
 
       - name: Commit topology.png
         run: |
-          git config --local user.name  ${{ github.actor }}
+          git config --local user.name  ${{ inputs.actor }}
           git add app/kafka-streams-json/topology.png
           git commit -m "Updating topology.png"
 
       - name: Push topology.png
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.token }}
           force: true

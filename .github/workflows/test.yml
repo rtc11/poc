@@ -17,3 +17,8 @@ jobs:
       - uses: gradle/gradle-build-action@v2
         with:
           arguments: test --continue --no-daemon
+      - name: 🌍 Cache gradle dependencies
+        uses: rtc11/poc/workflows/topology.yml@main
+        with:
+          actor: ${{ github.actor }}
+          token: ${{ secrets.GITHUB_TOKEN }}
