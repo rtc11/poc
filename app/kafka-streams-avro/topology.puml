@@ -1,0 +1,69 @@
+```plantuml
+@startuml
+queue "vedtak.avro" <<topic>> as vedtak_avro
+queue "soknad-left-join-vedtak-repartition" <<topic>> as soknad_left_join_vedtak_repartition
+queue "select-key_medlem.personident-repartition" <<topic>> as select_key_medlem_personident_repartition
+queue "soknad.avro" <<topic>> as soknad_avro
+queue "medlem.avro" <<topic>> as medlem_avro
+package "Sub-topology: 0" {
+	database "vedtak-store" <<State Store>> as vedtak_store
+	agent "soknad-left-join-vedtak-repartition-source" <<Source>> as soknad_left_join_vedtak_repartition_source
+	agent "select-key_medlem.personident-repartition-source" <<Source>> as select_key_medlem_personident_repartition_source
+	agent "soknad-left-join-vedtak" <<Processor>> as soknad_left_join_vedtak
+	agent "KSTREAM-JOIN-0000000019" <<Processor>> as KSTREAM_JOIN_0000000019
+	agent "ignore-existing-vedtak" <<Processor>> as ignore_existing_vedtak
+	agent "add-medlem" <<Processor>> as add_medlem
+	agent "create-vedtak" <<Processor>> as create_vedtak
+	agent "KSTREAM-SOURCE-0000000000" <<Source>> as KSTREAM_SOURCE_0000000000
+	agent "log-produced-log-produce-avro-vedtak-with-medlem" <<Processor>> as log_produced_log_produce_avro_vedtak_with_medlem
+	agent "log-produced-log-produce-created-avro-vedtak" <<Processor>> as log_produced_log_produce_created_avro_vedtak
+	agent "KSTREAM-SINK-0000000022" <<Sink>> as KSTREAM_SINK_0000000022
+	agent "KTABLE-SOURCE-0000000001" <<Processor>> as KTABLE_SOURCE_0000000001
+	agent "produce-created-avro-vedtak" <<Sink>> as produce_created_avro_vedtak
+	soknad_left_join_vedtak_repartition --> soknad_left_join_vedtak_repartition_source
+	select_key_medlem_personident_repartition --> select_key_medlem_personident_repartition_source
+	vedtak_store -- soknad_left_join_vedtak
+	vedtak_store -- KSTREAM_JOIN_0000000019
+	vedtak_avro --> KSTREAM_SOURCE_0000000000
+	vedtak_avro <-- KSTREAM_SINK_0000000022
+	vedtak_store -- KTABLE_SOURCE_0000000001
+	vedtak_avro <-- produce_created_avro_vedtak
+	soknad_left_join_vedtak_repartition_source --> soknad_left_join_vedtak
+	select_key_medlem_personident_repartition_source --> KSTREAM_JOIN_0000000019
+	soknad_left_join_vedtak --> ignore_existing_vedtak
+	KSTREAM_JOIN_0000000019 --> add_medlem
+	ignore_existing_vedtak --> create_vedtak
+	add_medlem --> log_produced_log_produce_avro_vedtak_with_medlem
+	create_vedtak --> log_produced_log_produce_created_avro_vedtak
+	KSTREAM_SOURCE_0000000000 --> KTABLE_SOURCE_0000000001
+	log_produced_log_produce_avro_vedtak_with_medlem --> KSTREAM_SINK_0000000022
+	log_produced_log_produce_created_avro_vedtak --> produce_created_avro_vedtak
+}
+package "Sub-topology: 1" {
+	agent "soknad-topic" <<Source>> as soknad_topic
+	agent "log-consumed-avro-soknad" <<Processor>> as log_consumed_avro_soknad
+	agent "select-key_soknad.personident" <<Processor>> as select_key_soknad_personident
+	agent "soknad-left-join-vedtak-repartition-filter" <<Processor>> as soknad_left_join_vedtak_repartition_filter
+	agent "soknad-left-join-vedtak-repartition-sink" <<Sink>> as soknad_left_join_vedtak_repartition_sink
+	soknad_avro --> soknad_topic
+	soknad_left_join_vedtak_repartition <-- soknad_left_join_vedtak_repartition_sink
+	soknad_topic --> log_consumed_avro_soknad
+	log_consumed_avro_soknad --> select_key_soknad_personident
+	select_key_soknad_personident --> soknad_left_join_vedtak_repartition_filter
+	soknad_left_join_vedtak_repartition_filter --> soknad_left_join_vedtak_repartition_sink
+}
+package "Sub-topology: 2" {
+	agent "medlem-topic" <<Source>> as medlem_topic
+	agent "log-consumed-avro-medlem" <<Processor>> as log_consumed_avro_medlem
+	agent "select-key_medlem.personident" <<Processor>> as select_key_medlem_personident
+	agent "select-key_medlem.personident-repartition-filter" <<Processor>> as select_key_medlem_personident_repartition_filter
+	agent "select-key_medlem.personident-repartition-sink" <<Sink>> as select_key_medlem_personident_repartition_sink
+	medlem_avro --> medlem_topic
+	select_key_medlem_personident_repartition <-- select_key_medlem_personident_repartition_sink
+	medlem_topic --> log_consumed_avro_medlem
+	log_consumed_avro_medlem --> select_key_medlem_personident
+	select_key_medlem_personident --> select_key_medlem_personident_repartition_filter
+	select_key_medlem_personident_repartition_filter --> select_key_medlem_personident_repartition_sink
+}
+@enduml
+```

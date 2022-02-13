@@ -1,0 +1,16 @@
+kafka:
+  brokers: localhost:9092
+  security: false
+  truststorePath:
+  keystorePath:
+  credstorePsw:
+
+søknad:
+  name: aap.soknad
+  group-id: grunnlag-2
+  client-id: grunnlag-aap.soknad-2
+
+grunnlag:
+  name: aap.grunnlag
+  group-id: grunnlag-2
+  client-id: grunnlag-aap.grunnlag-2

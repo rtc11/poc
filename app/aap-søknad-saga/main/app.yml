@@ -1,0 +1,11 @@
+kafka:
+  brokers: localhost:9092
+  security: false
+  truststorePath:
+  keystorePath:
+  credstorePsw:
+
+søknad:
+  name: aap.soknad
+  group-id: soknad-1
+  client-id: soknad-aap-soknad

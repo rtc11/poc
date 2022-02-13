@@ -1,0 +1,67 @@
+Topologies:
+   Sub-topology: 0
+    Source: soknad-left-join-vedtak-repartition-source (topics: [soknad-left-join-vedtak-repartition])
+      --> soknad-left-join-vedtak
+    Source: select-key_medlem.personident-repartition-source (topics: [select-key_medlem.personident-repartition])
+      --> KSTREAM-JOIN-0000000019
+    Processor: soknad-left-join-vedtak (stores: [vedtak-store])
+      --> ignore-existing-vedtak
+      <-- soknad-left-join-vedtak-repartition-source
+    Processor: KSTREAM-JOIN-0000000019 (stores: [vedtak-store])
+      --> add-medlem
+      <-- select-key_medlem.personident-repartition-source
+    Processor: ignore-existing-vedtak (stores: [])
+      --> create-vedtak
+      <-- soknad-left-join-vedtak
+    Processor: add-medlem (stores: [])
+      --> log-produced-log-produce-avro-vedtak-with-medlem
+      <-- KSTREAM-JOIN-0000000019
+    Processor: create-vedtak (stores: [])
+      --> log-produced-log-produce-created-avro-vedtak
+      <-- ignore-existing-vedtak
+    Source: KSTREAM-SOURCE-0000000000 (topics: [vedtak.avro])
+      --> KTABLE-SOURCE-0000000001
+    Processor: log-produced-log-produce-avro-vedtak-with-medlem (stores: [])
+      --> KSTREAM-SINK-0000000022
+      <-- add-medlem
+    Processor: log-produced-log-produce-created-avro-vedtak (stores: [])
+      --> produce-created-avro-vedtak
+      <-- create-vedtak
+    Sink: KSTREAM-SINK-0000000022 (topic: vedtak.avro)
+      <-- log-produced-log-produce-avro-vedtak-with-medlem
+    Processor: KTABLE-SOURCE-0000000001 (stores: [vedtak-store])
+      --> none
+      <-- KSTREAM-SOURCE-0000000000
+    Sink: produce-created-avro-vedtak (topic: vedtak.avro)
+      <-- log-produced-log-produce-created-avro-vedtak
+
+  Sub-topology: 1
+    Source: soknad-topic (topics: [soknad.avro])
+      --> log-consumed-avro-soknad
+    Processor: log-consumed-avro-soknad (stores: [])
+      --> select-key_soknad.personident
+      <-- soknad-topic
+    Processor: select-key_soknad.personident (stores: [])
+      --> soknad-left-join-vedtak-repartition-filter
+      <-- log-consumed-avro-soknad
+    Processor: soknad-left-join-vedtak-repartition-filter (stores: [])
+      --> soknad-left-join-vedtak-repartition-sink
+      <-- select-key_soknad.personident
+    Sink: soknad-left-join-vedtak-repartition-sink (topic: soknad-left-join-vedtak-repartition)
+      <-- soknad-left-join-vedtak-repartition-filter
+
+  Sub-topology: 2
+    Source: medlem-topic (topics: [medlem.avro])
+      --> log-consumed-avro-medlem
+    Processor: log-consumed-avro-medlem (stores: [])
+      --> select-key_medlem.personident
+      <-- medlem-topic
+    Processor: select-key_medlem.personident (stores: [])
+      --> select-key_medlem.personident-repartition-filter
+      <-- log-consumed-avro-medlem
+    Processor: select-key_medlem.personident-repartition-filter (stores: [])
+      --> select-key_medlem.personident-repartition-sink
+      <-- select-key_medlem.personident
+    Sink: select-key_medlem.personident-repartition-sink (topic: select-key_medlem.personident-repartition)
+      <-- select-key_medlem.personident-repartition-filter
+

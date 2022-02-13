@@ -1,0 +1,51 @@
+services:
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    depends_on: [ zookeeper ]
+    ports: [ 9092:9092 ]
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://:9093,OUTSIDE://:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_DELETE_TOPIC_ENABLED: "true"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_CREATE_TOPICS_SEPARATOR: "$$'\n'"
+      KAFKA_CREATE_TOPICS: | 
+        soknad.avro:1:1:compact
+        soknad.json:1:1:compact
+        vedtak.avro:1:1:compact
+        vedtak.json:1:1:compact
+        medlem.avro:1:1:compact
+        medlem.json:1:1:compact
+    volumes: [ /var/run/docker.sock:/var/run/docker.sock ]
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: zookeeper
+    ports: [ 2181:2181 ]
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry
+    container_name: schema-registry
+    restart: always
+    depends_on: [ kafka, zookeeper ]
+    ports: [ 8085:8085 ]
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:9093
+      SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8085
+
+  # LIST RECORDS:
+  # kcat -b localhost:9092 -t  soknad.v1 -C
+
+  # PRODUCE
+  # kcat -b localhost:9092 -t soknad.v1 -P -l soknad.json
+  # kcat -b localhost:9092 -t soknad.v1 -P -l medlem.json
+
+
+  # DELETE TOPIC:
+  #  docker exec -it 4b74bcb8aeb0 /bin/sh
+  #  opt/kafka/bin/kafka-topics.sh -zookeeper zookeeper:2181 --delete --topic soknad-sendt
