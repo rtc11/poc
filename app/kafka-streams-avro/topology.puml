@@ -15,8 +15,8 @@ package "Sub-topology: 0" {
 	agent "add-medlem" <<Processor>> as add_medlem
 	agent "create-vedtak" <<Processor>> as create_vedtak
 	agent "KSTREAM-SOURCE-0000000000" <<Source>> as KSTREAM_SOURCE_0000000000
-	agent "log-produced-log-produce-avro-vedtak-with-medlem" <<Processor>> as log_produced_log_produce_avro_vedtak_with_medlem
-	agent "log-produced-log-produce-created-avro-vedtak" <<Processor>> as log_produced_log_produce_created_avro_vedtak
+	agent "log-produce-avro-vedtak-with-medlem" <<Processor>> as log_produce_avro_vedtak_with_medlem
+	agent "log-produce-created-avro-vedtak" <<Processor>> as log_produce_created_avro_vedtak
 	agent "KSTREAM-SINK-0000000022" <<Sink>> as KSTREAM_SINK_0000000022
 	agent "KTABLE-SOURCE-0000000001" <<Processor>> as KTABLE_SOURCE_0000000001
 	agent "produce-created-avro-vedtak" <<Sink>> as produce_created_avro_vedtak
@@ -33,11 +33,11 @@ package "Sub-topology: 0" {
 	soknad_left_join_vedtak --> ignore_existing_vedtak
 	KSTREAM_JOIN_0000000019 --> add_medlem
 	ignore_existing_vedtak --> create_vedtak
-	add_medlem --> log_produced_log_produce_avro_vedtak_with_medlem
-	create_vedtak --> log_produced_log_produce_created_avro_vedtak
+	add_medlem --> log_produce_avro_vedtak_with_medlem
+	create_vedtak --> log_produce_created_avro_vedtak
 	KSTREAM_SOURCE_0000000000 --> KTABLE_SOURCE_0000000001
-	log_produced_log_produce_avro_vedtak_with_medlem --> KSTREAM_SINK_0000000022
-	log_produced_log_produce_created_avro_vedtak --> produce_created_avro_vedtak
+	log_produce_avro_vedtak_with_medlem --> KSTREAM_SINK_0000000022
+	log_produce_created_avro_vedtak --> produce_created_avro_vedtak
 }
 package "Sub-topology: 1" {
 	agent "soknad-topic" <<Source>> as soknad_topic
