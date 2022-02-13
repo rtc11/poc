@@ -19,7 +19,7 @@ jobs:
         id: plantuml
         uses: grassedge/generate-plantuml-action@v1.5
         with:
-          path: app/kafka-streams-json/topology.puml
+          path: app/kafka-streams-json/
           message: "Render PlantUML files"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
