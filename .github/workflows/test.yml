@@ -2,7 +2,9 @@ name: Test kafka-streams-json
 
 on:
   push:
-    paths: [ app/kafka-streams-json/** ]
+    paths:
+    - app/kafka-streams-json/**
+    - .github/workflows/test.yml
 
 jobs:
   test:
