@@ -19,6 +19,7 @@ jobs:
           arguments: test --continue --no-daemon
 
   topology:
+    needs: [ test ]
     uses:  rtc11/poc/.github/workflows/topology.yml@main
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
