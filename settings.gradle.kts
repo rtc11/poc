@@ -1,29 +1,39 @@
 rootProject.name = "poc"
 
+// APPS
 include(
-    "app:aap-vilkår",
-    "app:aap-grunnlag-saga",
-    "app:aap-søknad-saga",
+    "apps:aap-vilkår",
+    "apps:kafka-streams-avro",
+    "apps:kafka-streams-json",
 )
 
+// CONTRACTS
 include(
-    "app:kafka-streams-avro",
-    "app:kafka-streams-json",
-    "contract:aap-avro",
-    "contract:aap-json",
+    "contracts:aap-avro",
+    "contracts:aap-json",
 )
 
+// KTOR
 include(
-    "lib:kafka",
-    "lib:ktor-essentials",
-    "lib:kafka-mock",
+    "libs:ktor:essentials",
 )
 
-include("lib:kafka-streams")
-include("lib:kotlinx-serde")
-include("lib:lenses")
-include("lib:exposed")
-include("lib:utils")
+// FUNCTIONAL PROGRAMMING
+include(
+    "libs:fp:either",
+    "libs:fp:lenses",
+)
+
+// KAFKA
+include(
+    "libs:kafka:kafka",
+    "libs:kafka:streams",
+    "libs:kafka:mock",
+)
+
+include("libs:kotlinx-serde")
+include("libs:exposed")
+include("libs:utils")
 
 pluginManagement {
     repositories {

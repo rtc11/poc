@@ -1,0 +1,12 @@
+@namespace("no.tordly.avro.aap")
+protocol VedtakV1 {
+	import idl "medlem.avdl";
+
+	enum Status {VEDTATT, AVSLATT, AVVENTER}
+
+	record Vedtak {
+		string personident;
+		union{null, ErMedlem} erMedlem;
+		Status status;
+	}
+}
