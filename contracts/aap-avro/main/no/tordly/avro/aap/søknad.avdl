@@ -1,0 +1,7 @@
+@namespace("no.tordly.avro.aap")
+protocol SoknadV1 {
+	record Soknad {
+		string personident;
+		boolean arbeidetUtenlands;
+	}
+}
