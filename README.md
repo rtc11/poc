@@ -1,3 +1,3 @@
 # Topology
 
-![img](app/kafka-streams-json/doc/topology.png)
+![img](apps/kafka-streams-json/doc/topology.png)
