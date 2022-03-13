@@ -1,27 +1,18 @@
 package no.tordly.either
 
-interface F<T, R> {
-    fun f(t: T): R
+interface Functor<out A> {
+    fun <B> map(fn: (A) -> B): Functor<B>
 }
 
-sealed interface Either<A, B> {
-    fun <X> either(left: (t: A) -> X, right: (t: B) -> X): X
-    fun swap(): Either<B, A>
+sealed class Either<out A, out B> {
+    data class Left<A>(val value: A) : Either<A, Nothing>()
+    data class Right<B>(val value: B) : Either<Nothing, B>()
 
-    companion object {
-        fun <A, B> left(a: A): Left<A, B> = Left(a)
-        fun <A, B> right(b: B): Right<A, B> = Right(b)
+    fun <C> map(fn: (B) -> C): Either<A, C> = flatMap { Right(fn(it)) }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <A, C> flatMap(fn: (B) -> Either<A, C>): Either<A, C> = when (this) {
+        is Right -> fn(this.value)
+        is Left -> this as Either<A, C>
     }
-}
-
-class Left<A, B>(val value: A) : Either<A, B> {
-    override fun <X> either(left: (t: A) -> X, right: (t: B) -> X): X = left(value)
-    override fun swap(): Either<B, A> = Either.right(value)
-    override fun toString(): String = value.toString()
-}
-
-class Right<A, B>(val value: B) : Either<A, B> {
-    override fun <X> either(left: (t: A) -> X, right: (t: B) -> X): X = right(value)
-    override fun swap(): Either<B, A> = Either.left(value)
-    override fun toString(): String = value.toString()
 }
