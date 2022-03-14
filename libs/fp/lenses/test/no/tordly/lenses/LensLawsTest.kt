@@ -1,4 +1,4 @@
-package no.tordly.kotlinx.tordly.lenses
+package no.tordly.lenses
 
 import no.tordly.lenses.orElse
 import no.tordly.lenses.plus
