@@ -1,6 +1,9 @@
 package no.tordly.logs
 
-internal typealias LogFormat = (Message, Level) -> String
+internal typealias LogFormat = (Message, Level) -> Any
+
+internal val LogFormat.STDOUT get() = Message.STDOUT
+internal val LogFormat.JSON get() = Message.JSON
 
 internal sealed class Level(private val order: Int) {
     internal object Trace : Level(0)
