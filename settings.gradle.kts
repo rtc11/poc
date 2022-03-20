@@ -3,8 +3,13 @@ rootProject.name = "poc"
 // APPS
 include(
     "apps:aap-vilkår",
+    "apps:functional-program",
     "apps:kafka-streams-avro",
     "apps:kafka-streams-json",
+)
+
+include(
+    "ddd:fred-george"
 )
 
 // CONTRACTS
