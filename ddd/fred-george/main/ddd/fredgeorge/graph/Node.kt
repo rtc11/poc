@@ -13,11 +13,10 @@ class Node {
     private val links = mutableListOf<Link>()
     private val noVisitedNodes = emptyList<Node>()
 
-    infix fun canReach(destination: Node) = this.paths(destination).isNotEmpty()
-    infix fun hopCount(destination: Node) = this.path(destination, Path::hopCount).hopCount()
+    infix fun canReach(destination: Node) = paths(destination).isNotEmpty()
+    infix fun hopCount(destination: Node) = path(destination, Path::hopCount).hopCount()
     infix fun cost(destination: Node) = path(destination).cost()
-    infix fun path(destination: Node) = this.path(destination, Path::cost)
-
+    infix fun path(destination: Node) = path(destination, Path::cost)
     infix fun paths(destination: Node) = paths().filter(destination)
     infix fun cost(amount: Number) = LinkBuilder(amount.toDouble(), links)
 
@@ -32,7 +31,7 @@ class Node {
         return links.flatMap { link -> link.paths(visitedNodes + this) } + Path(this)
     }
 
-    private fun path(destination: Node, strategy: PathStrategy) = this.paths(destination)
+    private fun path(destination: Node, strategy: PathStrategy) = paths(destination)
         .minByOrNull { strategy(it).toDouble() }
         ?: throw IllegalArgumentException("Destination cannot be reached")
 }

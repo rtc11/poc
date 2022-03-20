@@ -36,9 +36,13 @@ include(
     "libs:kafka:mock",
 )
 
-include("libs:kotlinx-serde")
-include("libs:exposed")
-include("libs:utils")
+// LIBS
+include(
+    "libs:kotlinx-serde",
+    "libs:exposed",
+    "libs:utils",
+    "libs:logs"
+)
 
 pluginManagement {
     repositories {
