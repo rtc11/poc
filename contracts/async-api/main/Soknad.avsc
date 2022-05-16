@@ -1,0 +1,12 @@
+{
+  "type" : "record",
+  "name" : "Soknad",
+  "namespace" : "no.tordly.avro.aap",
+  "fields" : [ {
+    "name" : "personident",
+    "type" : "string"
+  }, {
+    "name" : "arbeidetUtenlands",
+    "type" : "boolean"
+  } ]
+}

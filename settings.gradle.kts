@@ -9,11 +9,13 @@ include(
 )
 
 include(
-    "ddd:fred-george"
+    "ddd:fred-george",
+    "ddd:visitor",
 )
 
 // CONTRACTS
 include(
+    "contracts:async-api",
     "contracts:aap-avro",
     "contracts:aap-json",
 )

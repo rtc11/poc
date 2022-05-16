@@ -1,0 +1,37 @@
+asyncapi: 2.3.0
+
+# ---
+
+info:
+  title: Søkere
+  version: 1.0.0
+
+# ---
+
+servers:
+  dev-gcp:
+    bindings:
+      kafka:
+        schemaRegistryUrl: "localhost:9094"
+        schemaRegistryVendor: "aiven"
+
+# ---
+
+channels:
+
+  aap.sokere.v1:
+    publish:
+      message:
+        schemaFormat: application/vnd.apache.avro;version=1.9.0
+        content:Type: application/octet-stream
+        bindings:
+          kafka:
+            schemaIdLocation: payload
+            key:
+              type: string
+              description: personident
+              pattern: '[0-9]{11}'
+        payload:
+          $ref: 'Soknad.avsc'
+
+# ---
