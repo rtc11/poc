@@ -1,23 +1,21 @@
 package vilkår.grunnlag
 
 import kotlinx.coroutines.runBlocking
-import no.nav.aap.kafka.models.KGrunnlag
+import no.tordly.aap.vilkår.*
+import no.tordly.aap.vilkår.models.KGrunnlag
 import org.jetbrains.exposed.sql.Op
 import org.jetbrains.exposed.sql.and
 import org.junit.jupiter.api.Test
 import vilkår.awaitDatabase
-import vilkår.Avklaringspenger
-import vilkår.Vurdering
-import vilkår.alderVurderingLens
-import vilkår.Database
-import vilkår.Søkere
 import vilkår.withTestApp
 import java.time.LocalDate
 import kotlin.random.Random
 import kotlin.random.nextLong
+import kotlin.test.Ignore
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
+@Ignore
 internal class GrunnlagAlderTest {
     // fixme: disabled teste by ocmmenting out test folder in build.gradle.kts
     @Test

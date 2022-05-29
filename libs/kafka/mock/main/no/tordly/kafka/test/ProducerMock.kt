@@ -1,4 +1,4 @@
-package no.tordly.kotlinx.tordly.kafka.test
+package no.tordly.kafka.test
 
 import org.apache.kafka.clients.consumer.ConsumerGroupMetadata
 import org.apache.kafka.clients.consumer.OffsetAndMetadata

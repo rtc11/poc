@@ -1,12 +1,12 @@
 package vilkår.søknad
 
 import kotlinx.coroutines.flow.take
-import no.nav.aap.kafka.models.KSøknad
-import no.nav.aap.kafka.test.key
-import no.nav.aap.kafka.test.value
+import no.tordly.aap.vilkår.Database
+import no.tordly.aap.vilkår.models.KSøknad
+import no.tordly.kafka.test.key
+import no.tordly.kafka.test.value
 import org.junit.jupiter.api.Test
 import vilkår.awaitDatabase
-import vilkår.Database
 import vilkår.withTestApp
 import java.util.*
 import kotlin.random.Random
@@ -65,8 +65,8 @@ internal class SøknadTest {
             }
 
             assertEquals(producedSøknader.size, 2)
-            assertEquals(producedSøknader.last().key(), ident)
-            assertNotNull(producedSøknader.last().value().id)
+            assertEquals(producedSøknader.last().key, ident)
+            assertNotNull(producedSøknader.last().value.id)
         }
     }
 

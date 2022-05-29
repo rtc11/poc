@@ -1,4 +1,4 @@
-package no.tordly.kotlinx.tordly.kafka.test
+package no.tordly.kafka.test
 
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay

@@ -4,7 +4,6 @@ import com.github.davidmc24.gradle.plugin.avro.GenerateAvroSchemaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm")
     id("com.github.davidmc24.gradle.plugin.avro") version "1.3.0"
 }
 
@@ -27,7 +26,6 @@ tasks {
     }
 
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
         source(generateAvro)
     }
 }
@@ -36,5 +34,4 @@ dependencies {
     api("org.apache.avro:avro:1.11.0")
 }
 
-kotlin.sourceSets["main"].kotlin.srcDirs("main")
 sourceSets["main"].java.srcDirs("build/generated/avro")

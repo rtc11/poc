@@ -1,14 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("plugin.serialization")
-    kotlin("jvm")
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
 }
 
 dependencies {
@@ -21,5 +12,3 @@ dependencies {
     api("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
     api("org.slf4j:slf4j-api:1.7.32")
 }
-
-kotlin.sourceSets["main"].kotlin.srcDirs("main")

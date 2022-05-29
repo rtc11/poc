@@ -1,9 +1,9 @@
 package vilkår.vedtak
 
 import kotlinx.coroutines.runBlocking
-import ktor.essentials.loadConfig
-import vilkår.*
-import vilkår.Database
+import no.tordly.aap.vilkår.*
+import no.tordly.aap.vilkår.vedtak.Vedtaksvurdering
+import no.tordly.ktor.essentials.loadConfig
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

@@ -1,23 +1,10 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm")
     kotlin("plugin.serialization")
     application
 }
 
 application {
     mainClass.set("vilkår.AppKt")
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-
-    withType<Test> {
-        useJUnitPlatform()
-    }
 }
 
 dependencies {
@@ -41,6 +28,5 @@ dependencies {
     testImplementation(project(":libs:kafka:mock"))
 }
 
-kotlin.sourceSets["main"].kotlin.srcDirs("main")
-//kotlin.sourceSets["test"].kotlin.srcDirs("test")
-sourceSets["main"].resources.srcDir("main")
+sourceSets["main"].resources.srcDirs("main")
+sourceSets["test"].resources.srcDirs("test")

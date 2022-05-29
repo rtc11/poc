@@ -1,11 +1,11 @@
-package no.tordly.kotlinx.tordly.kafka.test
+package no.tordly.kafka.test
 
 import org.apache.kafka.clients.consumer.*
 import org.apache.kafka.common.TopicPartition
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.time.Duration
-import java.util.concurrent.TimeUnit
+import java.util.*
 import java.util.regex.Pattern
 
 class ConsumerMock<V>(
@@ -34,14 +34,12 @@ class ConsumerMock<V>(
     override fun unsubscribe() {}
     override fun close() {}
     override fun close(timeout: Duration) {}
-    override fun close(t: Long, u: TimeUnit) = TODO("dead end")
     override fun assignment() = TODO("dead end")
     override fun subscription() = TODO("dead end")
     override fun subscribe(t: MutableCollection<String>, c: ConsumerRebalanceListener) = TODO("dead end")
     override fun subscribe(p: Pattern, c: ConsumerRebalanceListener) = TODO("dead end")
     override fun subscribe(p: Pattern) = TODO("dead end")
     override fun assign(p: MutableCollection<TopicPartition>) = TODO("dead end")
-    override fun poll(t: Long) = TODO("dead end")
     override fun commitSync() = TODO("dead end")
     override fun commitSync(t: Duration) = TODO("dead end")
     override fun commitSync(o: Offsets) = TODO("dead end")
@@ -55,8 +53,6 @@ class ConsumerMock<V>(
     override fun seekToEnd(p: MutableCollection<TopicPartition>) = TODO("dead end")
     override fun position(p: TopicPartition) = TODO("dead end")
     override fun position(p: TopicPartition, timeout: Duration) = TODO("dead end")
-    override fun committed(p: TopicPartition) = TODO("dead end")
-    override fun committed(p: TopicPartition, timeout: Duration) = TODO("dead end")
     override fun committed(p: MutableSet<TopicPartition>) = TODO("dead end")
     override fun committed(p: MutableSet<TopicPartition>, t: Duration) = TODO("dead end")
     override fun metrics() = TODO("dead end")
@@ -76,4 +72,23 @@ class ConsumerMock<V>(
     override fun groupMetadata() = TODO("dead end")
     override fun enforceRebalance() = TODO("dead end")
     override fun wakeup() = TODO("dead end")
+    override fun enforceRebalance(reason: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun currentLag(topicPartition: TopicPartition?): OptionalLong {
+        TODO("Not yet implemented")
+    }
+
+    override fun poll(timeout: Long): ConsumerRecords<String, V> {
+        TODO("Not yet implemented")
+    }
+
+    override fun committed(partition: TopicPartition?): OffsetAndMetadata {
+        TODO("Not yet implemented")
+    }
+
+    override fun committed(partition: TopicPartition?, timeout: Duration?): OffsetAndMetadata {
+        TODO("Not yet implemented")
+    }
 }

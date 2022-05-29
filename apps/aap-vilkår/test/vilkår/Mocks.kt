@@ -1,6 +1,6 @@
 package vilkår
 
-import no.nav.aap.kafka.test.KafkaMock
+import no.tordly.kafka.test.KafkaMock
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class Mocks(timeoutMs: Long) : AutoCloseable {

@@ -1,14 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     `java-library`
-    kotlin("jvm")
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
 }
 
 dependencies {
@@ -16,5 +7,3 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic:1.2.7")
     api("io.ktor:ktor-server-core:1.6.7")
 }
-
-kotlin.sourceSets["main"].kotlin.srcDirs("main")

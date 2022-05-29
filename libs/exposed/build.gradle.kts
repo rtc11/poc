@@ -1,14 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     `java-library`
-    kotlin("jvm")
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
 }
 
 dependencies {
@@ -17,5 +8,3 @@ dependencies {
     api("org.jetbrains.exposed:exposed-jdbc:0.37.3")
     api("org.jetbrains.exposed:exposed-dao:0.37.3")
 }
-
-kotlin.sourceSets["main"].kotlin.srcDirs("main")

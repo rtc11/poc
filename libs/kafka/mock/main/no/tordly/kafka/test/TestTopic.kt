@@ -1,4 +1,4 @@
-package no.tordly.kotlinx.tordly.kafka.test
+package no.tordly.kafka.test
 
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.awaitAll
@@ -9,8 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger
 
 typealias KeyValue<K, V> = Pair<K, V>
 
-fun <V> KeyValue<String, V>.key() = first
-fun <V> KeyValue<String, V>.value() = second
+val <V> KeyValue<String, V>.key get() = first
+val <V> KeyValue<String, V>.value get() = second
 
 class TestTopic<K, V>(val name: String) {
     private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())

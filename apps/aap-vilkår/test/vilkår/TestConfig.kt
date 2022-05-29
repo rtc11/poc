@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
+import no.tordly.aap.vilkår.vilkår
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 fun <R> withTestApp(

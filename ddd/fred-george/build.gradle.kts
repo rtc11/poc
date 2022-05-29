@@ -1,14 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm")
     id("io.gitlab.arturbosch.detekt") version "1.18.0"
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
 }
 
 dependencies {
@@ -25,10 +16,3 @@ detekt {
     config = files("detekt.yml")
     buildUponDefaultConfig = true
 }
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-kotlin.sourceSets["main"].kotlin.srcDirs("main")
-kotlin.sourceSets["test"].kotlin.srcDirs("test")
